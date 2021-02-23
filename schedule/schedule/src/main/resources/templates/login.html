@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Administration</title>
+    <meta charset = "ISO-8859-1" />
+       <link href="../static/css/main.css"
+          th:href="@{css/main.css}" rel="stylesheet" media="screen"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <figure>
+        <form id="loginForm">
+            <p><label for="user">Username</label><br /><input type="text" name="user" placeholder="username" /></p>
+            <p><label for="pass">Password</label><br /><input type="password" name="pass" placeholder="password" /></p>
+            <p><button type="submit" id="login">Log in</button></p>
+        </form>
+
+        <p th:if="${loginError}" class="error">Wrong user or password</p>  
+        <p th:if="${loginLearnerError}" class="error">This login is only for trainers timetable</p>  
+                
+        </figure>
+</body>
+</html> 
