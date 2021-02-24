@@ -12,7 +12,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {  
         http    
         .authorizeRequests()  
-            .antMatchers( "/public/**").permitAll() // permits unauthorized access to public directory 
+            .antMatchers( "/css/**").permitAll() // permits unauthorized access to the css directory 
             .anyRequest().authenticated()  
                 .and()  
             .formLogin()  
@@ -27,6 +27,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .withUser("user")  
             .password("{noop}pass") // Spring Security 5 requires specifying the password storage format  
             .roles("USER");  
+
+            
     }  
 
 }

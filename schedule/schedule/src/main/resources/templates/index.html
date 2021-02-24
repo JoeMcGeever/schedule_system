@@ -8,68 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div align = "center">
-    <h1>Administration</h1>
-    <a href="/new_ftuser"> New Full-Time User Registration </a><br><br>
-    <a href="/new_ptuser"> New Part-Time User Registration </a>
-    <br><br>
-    <table border = "1" cellpadding = "10">
-        <thead>
-            <tr>
-                <th> username </th>
-                <th> email </th>
-                <th> mode </th>
-                <th> grade or rate </th>
-                <th> team </th>
-                <th> contract </th>
-                <th> operations </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:if="${ft_users.empty}">
-                <td colspan="7"style="text-align:center"> No Full-time Users Registered </td> 
-            </tr>
-            <tr th:each="ftuser : ${ft_users}">
-                <td><span th:text="${ftuser.username}"> </span></td>
-                <td><span th:text="${ftuser.email}"> </span></td>
-                <td><span th:text="${ftuser.dtype}"> </span></td>
-                <td><span th:text="${ftuser.grade}"> </span></td>
-                <td><span th:text="${ftuser.team}"> </span></td>
-                <td><span th:text="${ftuser.contract}"> </span></td>
-                <td>
-                    <a th:href="@{/edit_ftuser/{dtype}(dtype=${ftuser.dtype})}">Edit</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/delete_ftuser/{username}(username=${ftuser.username})}">Delete</a>
-                </td>
-                </td>
-            </tr>
 
-            <tr th:if="${pt_users.empty}">
-                <td colspan="7"style="text-align:center"> No Part-time Users Registered </td> 
-            </tr>
-            <tr th:each="ptuser : ${pt_users}">
-                <td><span th:text="${ptuser.username}"> </span></td>
-                <td><span th:text="${ptuser.email}"> </span></td>
-                <td><span th:text="${ptuser.dtype}"> </span></td>
-                <td><span th:text="${ptuser.rate}"> </span></td>
-                <td><span th:text="${ptuser.team}"> </span></td>
-                <td><span th:text="${ptuser.contract}"> </span></td>
-                <td>
-                    <a th:href="@{/edit_ptuser/{dtype}(dtype=${ptuser.dtype})}">Edit</a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/delete_ptuser/{username}(username=${ptuser.username})}">Delete</a>
-                </td>
-                </td>
-            </tr>
-
-        </tbody>
-    </table>
-</div>
-<br><br>
-<div align = "center">
-NOTES:<br>
-<b>Number of the full-time users: <label th:text="${ft_users.size()}"></label></b><br>
-<b>Number of the part-time users: <label th:text="${pt_users.size()}"></label></b>
-</div>
+<h1>CHEESEBURGER</h1>
 </body>
 </html> 

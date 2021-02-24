@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,25 +25,29 @@ public class AppController {
     private LearnerService learner_service;
 
     @RequestMapping("/")
-    public String viewHomePage(Model model) {
+    public String viewHomePage(Model model, Authentication authentication) {
         // re-route to login form if not signed in!
 
-        System.out.println("in home page mapping");
-        if(true){
-            return "redirect:/login";
-        }
 
 
-        System.out.println("----------------------------------------------------------");
-        int currentWeek = 1;
-        List<Event> currentWeekEvents = event_service.getEvents(currentWeek); //gets current weeks events
+        System.out.println(authentication.getName());
+        // if(true){
+        //     return "redirect:/login";
+        // }
+
+        return "index";
+
+
+        // System.out.println("----------------------------------------------------------");
+        // int currentWeek = 1;
+        // List<Event> currentWeekEvents = event_service.getEvents(currentWeek); //gets current weeks events
         
-        model.addAttribute("ft_users", currentWeekEvents); // index page - this add attribute must happen
+        // model.addAttribute("ft_users", currentWeekEvents); // index page - this add attribute must happen
 
 
-        System.out.println("Events for this week: " + currentWeekEvents.size());
+        // System.out.println("Events for this week: " + currentWeekEvents.size());
 
-        return "index"; // home page
+        // return "index"; // home page
     }
 
     @RequestMapping("/login")
@@ -62,14 +67,7 @@ public class AppController {
         return "login.html";  
     }  
 
-
-    // @RequestMapping(value = "/login", method = RequestMethod.POST)
-    // public String login(@ModelAttribute("login") User user){    
-
-    //     return "home";
-    // }
-
-    
+   
 
 
     
