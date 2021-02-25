@@ -8,8 +8,9 @@ import javax.persistence.*;
 public abstract class User {
     // note: attributes should be the same order in the database 
     //(if not using @column)
+
     @Id
-    @Column(name="username")
+    @Column(name = "name")
     private String username; //username - primary key in the User table
 
     @Column(name = "email")
@@ -18,12 +19,10 @@ public abstract class User {
     @Column(name = "dtype",  insertable=false, updatable=false) //dtype: default
     private String dtype; //dtype: the default attribute for sub-types
 
-    @Column(name="team")
-    private String team;
-
-    @Column(name="contract")
-    private String contract;
+    @Column(name = "password")
+    private String password;
      
+
     public String getUsername() {
         return username;
     }
@@ -48,19 +47,12 @@ public abstract class User {
         this.dtype = dtype;
     }
     
-    public String getContract() {
-        return contract;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContract(String contract) {
-        this.contract = contract;
+    public void setPassword(String password) {
+        this.password = password;
     }
     
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
-    }
 }

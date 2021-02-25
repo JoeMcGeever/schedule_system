@@ -24,7 +24,7 @@ public class LearnerService {
         return repo.findByDtype(mode); //findByDtype: the default method to find a sub-type
     }
         
-    public void delete(String name) {
-        repo.deleteByUsername(name);  //username - primary key in the User table
+    public void delete(String username) {
+        repo.deleteByUsername(username); //username - primary key in the User table
     }          
 }

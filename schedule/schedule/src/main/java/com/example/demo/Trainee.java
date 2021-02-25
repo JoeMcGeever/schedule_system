@@ -4,15 +4,15 @@ import javax.persistence.*;
 
 @Entity
 public class Trainee extends User {
-    // @Column(name="grade")
-    // private int grade;
+    @Column(name="trainerbio") //case insensitive, but trainerBio does convert to trainer_bio
+    private String trainerBio;
 
-    // public int getGrade() {
-    //     return grade;
-    // }
+    public String getGrade() {
+        return trainerBio;
+    }
 
-    // public void setGrade(int num) {
-    //     this.grade = num;
-    // }
+    public void setGrade(String trainerBio) {
+        this.trainerBio = trainerBio;
+    }
 }
 

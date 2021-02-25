@@ -16,7 +16,7 @@ public class EventService {
     //     return repo.findAll();
     // }
 
-    public List<Event> getEvents(int weekNumber) {
+    public List<Event> getEvents(int weekNumber, int userID) {
              return repo.findAll();
     }
 

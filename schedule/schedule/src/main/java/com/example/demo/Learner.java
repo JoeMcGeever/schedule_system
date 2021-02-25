@@ -4,14 +4,25 @@ import javax.persistence.*;
 
 @Entity
 public class Learner extends User {
-    // @Column(name="rate")
-    // private double rate;
+    @Column(name="companyName")
+    private String companyName;
 
-    // public double getRate() {
-    //     return rate;
-    // }
+    @Column(name="skillLevel")
+    private String skillLevel;
 
-    // public void setRate(double num) {
-    //     this.rate = num;
-    // }
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getskillLevel() {
+        return skillLevel;
+    }
+
+    public void setskillLevel(String skillLevel) {
+        this.skillLevel = skillLevel;
+    }
 }

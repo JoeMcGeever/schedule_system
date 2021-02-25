@@ -26,14 +26,11 @@ public class AppController {
 
     @RequestMapping("/")
     public String viewHomePage(Model model, Authentication authentication) {
-        // re-route to login form if not signed in!
-
 
 
         System.out.println(authentication.getName());
-        // if(true){
-        //     return "redirect:/login";
-        // }
+
+        //do check on getName to see if the id is a trainer or a learner. If learner -> redirect to a html page showing "Learner login --> not implemented though as not task"
 
         return "index";
 
