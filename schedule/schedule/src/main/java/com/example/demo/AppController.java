@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -25,26 +27,32 @@ public class AppController {
     private LearnerService learner_service;
 
     @RequestMapping("/")
-    public String viewHomePage(Model model, Authentication authentication) {
+    public String viewHomePage(Model model, Authentication authentication, @RequestParam(value="page", required = false) Integer page) {
 
+        User user = trainee_service.getUser(authentication.getName());
 
-        System.out.println(authentication.getName());
-
-        //do check on getName to see if the id is a trainer or a learner. If learner -> redirect to a html page showing "Learner login --> not implemented though as not task"
-
-        return "index";
-
-
-        // System.out.println("----------------------------------------------------------");
-        // int currentWeek = 1;
-        // List<Event> currentWeekEvents = event_service.getEvents(currentWeek); //gets current weeks events
         
-        // model.addAttribute("ft_users", currentWeekEvents); // index page - this add attribute must happen
+        if(page == null){
+            page = 1;
+        }
 
+    
+        System.out.println(page);
+        
+        
 
-        // System.out.println("Events for this week: " + currentWeekEvents.size());
+        if(user.getDtype().equals("trainee")){
 
-        // return "index"; // home page
+            //here is the plan:
+            //get from the layer: all events for currently selected week (footer)
+            int footer = 5;
+            model.addAttribute("footer", footer);
+            
+            return "index";
+        } else {
+            return "learner_index";
+        }
+
     }
 
     @RequestMapping("/login")
