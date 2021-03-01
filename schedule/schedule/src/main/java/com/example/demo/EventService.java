@@ -16,13 +16,13 @@ public class EventService {
     //     return repo.findAll();
     // }
 
-    public List<Event> getEvents(int weekNumber, int userID) {
+    public List<Event> getEvents(int weekNumber, String username) {
              return repo.findAll();
     }
 
-    // public void save(Event eventInstance) {
-    //     repo.save(eventInstance);
-    // }
+    public void save(Event eventInstance) {
+        repo.save(eventInstance);
+    }
 
         
     // public void delete(String name) {

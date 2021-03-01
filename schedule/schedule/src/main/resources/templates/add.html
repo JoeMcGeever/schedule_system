@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Login</title>
+    <meta charset = "ISO-8859-1" />
+       <link href="../static/css/login.css"
+          th:href="@{css/login.css}" rel="stylesheet" media="screen"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <figure>
+        <form th:action="@{/add}" method="post">
+            <p><label>Topic title:</label><br />
+                <input type="text" id="topic" placeholder="Topic" name="topic" autofocus="autofocus" /> 
+            <p><label>Class size:</label><br />
+                <input type="classSize" id="classSize" name="classSize" placeholder="Class Size" /> <br />
+            <p><label>Location:</label><br />
+                <input type="location" id="location" name="location" placeholder="Location" /> <br />
+            <p><label for="date">Date:</label><br />
+                <input type="date" id="date" name="date" placeholder="Date" /> <br />
+            <p><label for="time">Time:</label><br />
+                <input type="time" id="time" name="time" placeholder="Time" /> <br />
+            <p><label>Duration:</label><br />
+                <input type="duration" id="duration" name="duration" placeholder="Docation" /> <br />            
+                <input id="submit" type="submit" value="Add" />
+        </form>
+
+        <p th:if="${addError}" class="error">Please enter all of the details correctly</p>  
+                
+        </figure>
+</body>
+</html> 

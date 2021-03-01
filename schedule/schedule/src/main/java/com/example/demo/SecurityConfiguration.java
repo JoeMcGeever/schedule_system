@@ -1,6 +1,5 @@
 package com.example.demo;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration  
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {  
@@ -47,10 +47,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .formLogin()  
                 .loginPage("/login")  //the page for logging in is my /login route
                 .failureUrl("/login-error")  //if it fails, it goes here
-                .permitAll(); //once signed in, everything is permitted
-            // .and()
-            // .logout().permitAll()
-            // .and();
+                .permitAll() //once signed in, everything is permitted
+            .and()
+            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
             // .and()
             // .rememberMe().tokenRepository(persistentTokenRepository())
             // .and();

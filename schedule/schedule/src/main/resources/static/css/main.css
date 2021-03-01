@@ -46,6 +46,15 @@
   }  
 
 
+  nav nav>ul{
+  list-style: none;
+  margin: 0 2px;
+  padding: 0;
+  display: flex;
+    font-weight: bold;
+  justify-content: space-around;
+}
+
 
 
 .codyhouse {
@@ -69,7 +78,7 @@ fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed, 
 figure, figcaption, header, hgroup, 
-menu, nav, output, ruby, section, summary,
+menu, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -80,7 +89,7 @@ time, mark, audio, video {
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
-header, hgroup, menu, nav, section, main {
+header, hgroup, menu, section, main {
 	display: block;
 }
 body {

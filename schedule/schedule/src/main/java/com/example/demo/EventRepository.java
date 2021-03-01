@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventRepository extends JpaRepository<Event, String> {
 
-    public void deleteByUsername(String username); //username - primary key in the Contract table
+    public void deleteByEventID(int eventID); //eventID - primary key in the Event table
 
 }
