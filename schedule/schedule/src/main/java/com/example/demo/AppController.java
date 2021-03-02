@@ -82,6 +82,7 @@ public class AppController {
         //if success:        
         return "redirect:/"; //return to index page  
         //otherwise, return an error -- load add.html but add a true statement to an error value in model.
+        //this error could be if there is a timetabling clash
     }
 
        
