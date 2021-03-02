@@ -74,11 +74,16 @@ public class AppController {
 
     //to save a new event to the database      
     @RequestMapping(value = "/add", method = RequestMethod.POST) 
-    public String saveFullTimeUser(@ModelAttribute("event") Event event, Authentication authentication){    
+    public String saveFullTimeUser(@ModelAttribute("event") Event event, Authentication authentication, Model model){    
         
         event.setTrainee(authentication.getName()); //set the trainee name 
         
-        event_service.save(event); //save to Event table
+        String errorMessage = event_service.save(event);
+        if(errorMessage != null){ //if the saving fails, and false is returned
+            model.addAttribute("addError", true);
+            model.addAttribute("addErrorMessage", "Error: <br>This clashes with your '" + errorMessage + "' class!<p></p>");
+            return "add.html";
+        } //save to Event table
         //if success:        
         return "redirect:/"; //return to index page  
         //otherwise, return an error -- load add.html but add a true statement to an error value in model.

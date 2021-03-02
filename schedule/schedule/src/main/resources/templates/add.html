@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head> 
-    <title>Login</title>
+    <title>Add Event</title>
     <meta charset = "ISO-8859-1" />
        <link href="../static/css/login.css"
           th:href="@{css/login.css}" rel="stylesheet" media="screen"/>
@@ -21,7 +21,6 @@
             <p><label for="time">Time (in 30 min increments from 09:00-18:00):</label><br />
                 <input type="time" min="09:00" max="18:00" step="1800" id="time" name="time" /> <br />
             <p><label>Duration:</label><br />
-                <!-- <input type="duration" id="duration" name="duration" placeholder="Duration" /> <br />   -->
                 <select type="duration" id="duration" name="duration" placeholder="Duration">
                     <option value=30>30 mins</option>
                     <option value=60>60 mins</option>
@@ -34,7 +33,9 @@
             <input id="submit" type="submit" value="Add" />
         </form>
 
-        <p th:if="${addError}" class="error">Please enter all of the details correctly</p>  
+        <p th:if="${addError}" class="error">
+            <p><span th:utext="${addErrorMessage}"></span></p>
+        </p>  
                 
         </figure>
 </body>
