@@ -23,33 +23,39 @@ public class EventService {
     //     return repo.findAll();
     // }
 
-    public List<Event> getWeeklyEvents(int weekNumber, String username) {
+    public List<Event> getWeeklyEvents(LocalDateTime recentMonday, String username) {
         //startDate = current date + 7*weekNumber days
         //endDate = startDate + 7 days (maybe do before 8 days)
         //find all events between start and end with username
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd"); 
-        LocalDateTime now = LocalDateTime.now();
-
-
-
-        System.out.println(now.getDayOfWeek());
-
-        while(now.getDayOfWeek() != DayOfWeek.MONDAY){ //get the most recent monday
-            now = now.minusDays(1);
-            System.out.println(now); 
-            System.out.println(now.getDayOfWeek()); 
-        }
-
-        now = now.plusDays((weekNumber-1) * 7); //add on a week depending on page (week 1 should not add any, 2 should add 7 etc)
-
-        String currentDate = dtf.format(now);  //needs to always show last monday
-        String weekEnd = dtf.format(now.plusDays(6));
+        
+        String currentDate = dtf.format(recentMonday);  //needs to always show last monday
+        String weekEnd = dtf.format(recentMonday.plusDays(6)); //gets the end of the week
         System.out.println(currentDate);  
         System.out.println(weekEnd); 
         System.out.println(username); 
         
         return repo.findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(weekEnd, currentDate, username);
     }
+
+    public LocalDateTime getWeekCommencingDate(int weekNumber){
+        LocalDateTime now = LocalDateTime.now();
+
+        if(weekNumber<0){ // if the page is below 0
+            weekNumber += 1 ; // Add one to work with plusDays - if weekNumber==-1 set weekNumber to 0
+        }
+
+        System.out.println(now.getDayOfWeek());
+        while(now.getDayOfWeek() != DayOfWeek.MONDAY){ //get the most recent monday
+            now = now.minusDays(1);
+            System.out.println(now); 
+            System.out.println(now.getDayOfWeek()); 
+        }
+        now = now.plusDays((weekNumber-1) * 7); //add on a week depending on page (week 1 should not add any, 2 should add 7 etc)
+
+        return now;
+    }
+
 
     public String save(Event eventInstance) { //returns true if successfully adds the event
         String errorMessage = checkEventClash(eventInstance);

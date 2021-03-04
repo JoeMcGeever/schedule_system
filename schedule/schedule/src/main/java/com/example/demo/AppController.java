@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,13 +45,17 @@ public class AppController {
                 page = 1;
             }    
 
+            LocalDateTime lastMonday = event_service.getWeekCommencingDate(page); //gets the last monday date
+            List<Event> weeklyEvents = event_service.getWeeklyEvents(lastMonday, (authentication.getName())); //sends to the getWeeklyEvents function
 
-            List<Event> weeklyEvents = event_service.getWeeklyEvents(page, (authentication.getName()));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //format the last monday date to display on page
+            String weekCommencing = dtf.format(lastMonday);  
 
             System.out.println(weeklyEvents.size());
 
             int weeklyLength = 12;
             model.addAttribute("footer", weeklyLength);
+            model.addAttribute("weekCommencing", "Week commencing: " + weekCommencing);
             
             return "index";
         } else {
