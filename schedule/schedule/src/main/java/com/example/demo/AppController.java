@@ -32,21 +32,22 @@ public class AppController {
         User user = trainee_service.getUser(authentication.getName());
 
         
-        if(page == null){
-            page = 1;
-        }
-
-    
-        System.out.println(page);
-        
-        
 
         if(user.getDtype().equals("trainee")){
 
             //here is the plan:
             //get from the layer: all events for currently selected week (footer)
-            int footer = 5;
-            model.addAttribute("footer", footer);
+            if(page == null){
+                page = 1;
+            }    
+
+
+            List<Event> weeklyEvents = event_service.getWeeklyEvents(page, (authentication.getName()));
+
+            System.out.println(weeklyEvents.size());
+
+            int weeklyLength = 12;
+            model.addAttribute("footer", weeklyLength);
             
             return "index";
         } else {

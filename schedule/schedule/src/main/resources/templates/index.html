@@ -22,6 +22,7 @@
 	</nav>
 
 
+    <!-- WEEK COMMENCING INFO HERE -->
 
     <div class="cd-schedule loading">
         <div class="timeline">
@@ -186,10 +187,59 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="events-group">
+                    <div class="top-info"><span>Saturday</span></div>
+    
+                    <ul>
+                        <li class="single-event" data-start="10:00" data-end="11:00"  data-content="event-rowing-workout" data-event="event-2">
+                            <a href="#0">
+                                <em class="event-name">Rowing Workout</em>
+                            </a>
+                        </li>
+    
+                        <li class="single-event" data-start="12:30" data-end="14:00" data-content="event-abs-circuit" data-event="event-1">
+                            <a href="#0">
+                                <em class="event-name">Abs Circuit</em>
+                            </a>
+                        </li>
+    
+                        <li class="single-event" data-start="15:45" data-end="16:45"  data-content="event-yoga-1" data-event="event-3">
+                            <a href="#0">
+                                <em class="event-name">Yoga Level 1</em>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="events-group">
+                    <div class="top-info"><span>Sunday</span></div>
+    
+                    <ul>
+                        <li class="single-event" data-start="10:00" data-end="11:00"  data-content="event-rowing-workout" data-event="event-2">
+                            <a href="#0">
+                                
+                                <em class="event-name">Rowing Workout</em>
+                            </a>
+                        </li>
+    
+                        <li class="single-event" data-start="12:30" data-end="14:00" data-content="event-abs-circuit" data-event="event-1">
+                            <a href="#0">
+                                <em class="event-name">Abs Circuit</em>
+                            </a>
+                        </li>
+    
+                        <li class="single-event" data-start="15:45" data-end="16:45"  data-content="event-yoga-1" data-event="event-3">
+                            <a href="#0">
+                                <em class="event-name">Yoga Level 1</em>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     
-        <!-- <div class="event-modal">
+        <div class="event-modal">
             <header class="header">
                 <div class="content">
                     <span class="event-date"></span>
@@ -205,7 +255,7 @@
             </div>
     
             <a href="#0" class="close">Close</a>
-        </div> -->
+        </div>
     
         <div class="cover-layer"></div>
     </div> <!-- .cd-schedule -->
@@ -217,7 +267,7 @@
 
     <div class="centerFooter">
       <div class="pagination">
-        <a href="/?page=-1" text="-1"></a>
+        <a href="/?page=-1" th:text="-1"></a>
         <tr th:if="${footer == 0}">
             <a href="/?page=1" text="1"></a>
             </tr>

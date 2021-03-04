@@ -1,6 +1,9 @@
 package com.example.demo;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -20,8 +23,32 @@ public class EventService {
     //     return repo.findAll();
     // }
 
-    public List<Event> getEvents(int weekNumber, String username) {
-             return repo.findAll();
+    public List<Event> getWeeklyEvents(int weekNumber, String username) {
+        //startDate = current date + 7*weekNumber days
+        //endDate = startDate + 7 days (maybe do before 8 days)
+        //find all events between start and end with username
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd"); 
+        LocalDateTime now = LocalDateTime.now();
+
+
+
+        System.out.println(now.getDayOfWeek());
+
+        while(now.getDayOfWeek() != DayOfWeek.MONDAY){ //get the most recent monday
+            now = now.minusDays(1);
+            System.out.println(now); 
+            System.out.println(now.getDayOfWeek()); 
+        }
+
+        now = now.plusDays((weekNumber-1) * 7); //add on a week depending on page (week 1 should not add any, 2 should add 7 etc)
+
+        String currentDate = dtf.format(now);  //needs to always show last monday
+        String weekEnd = dtf.format(now.plusDays(6));
+        System.out.println(currentDate);  
+        System.out.println(weekEnd); 
+        System.out.println(username); 
+        
+        return repo.findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(weekEnd, currentDate, username);
     }
 
     public String save(Event eventInstance) { //returns true if successfully adds the event
@@ -51,8 +78,6 @@ public class EventService {
 
             Boolean hasOverlap = !eventTimeEnd.isBefore(iTime) && !eventTimeStart.isAfter(iEndTime); //checks to see if there is an overlap
             //The above negates the only two cases when there isnt an overlap. End of one is before the start of the other, and the mirror.
-
-
 
             if(hasOverlap){
                 System.out.println("Clash!");
