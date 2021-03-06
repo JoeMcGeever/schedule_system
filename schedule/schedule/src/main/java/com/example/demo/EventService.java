@@ -31,10 +31,7 @@ public class EventService {
         
         String currentDate = dtf.format(recentMonday);  //needs to always show last monday
         String weekEnd = dtf.format(recentMonday.plusDays(6)); //gets the end of the week
-        System.out.println(currentDate);  
-        System.out.println(weekEnd); 
-        System.out.println(username); 
-        
+
         return repo.findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(weekEnd, currentDate, username);
     }
 

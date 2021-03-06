@@ -53,9 +53,17 @@ public class AppController {
 
             System.out.println(weeklyEvents.size());
 
-            int weeklyLength = 12;
-            model.addAttribute("footer", weeklyLength);
-            model.addAttribute("weekCommencing", "Week commencing: " + weekCommencing);
+            model.addAttribute("footer", page); //send current page number
+            model.addAttribute("weekCommencing", "Week commencing: " + weekCommencing); //send week commencing information
+
+            
+            model.addAttribute("mondayEvents", weeklyEvents); //send events for each day to be displayed
+            model.addAttribute("tuesdayEvents", weeklyEvents); //send events for each day to be displayed
+            model.addAttribute("wednesdayEvents", weeklyEvents); //send events for each day to be displayed
+            model.addAttribute("thursdayEvents", weeklyEvents); //send events for each day to be displayed
+            model.addAttribute("fridayEvents", weeklyEvents); //send events for each day to be displayed
+            model.addAttribute("satudayEvents", weeklyEvents); //send events for each day to be displayed
+            model.addAttribute("sundayEvents", weeklyEvents); //send events for each day to be displayed
             
             return "index";
         } else {

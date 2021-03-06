@@ -20,3 +20,23 @@ figure {
  form {
     margin: auto;
 }
+
+
+header {
+	width:100%;
+    text-align:center;
+	background-color: red;
+	padding-bottom: 0.5em;
+}
+
+
+
+/* header > img {
+    display:inline-block;
+    margin: 0 auto;
+    width:40%
+} */
+
+header strong {
+	color: green;
+}
