@@ -14,7 +14,7 @@
     
 	<nav>
 		<ul>
-			<li><a href="/add">Add an Issue</a></li>
+			<li><a href="/add">Add a new Event</a></li>
 			<li><a href="/logout" id="logout">Logout</a></li>
 		</ul>
 	</nav>
@@ -33,44 +33,101 @@
               Duration dictates the height of the element
            -->
         <tr th:each="event: ${mondayEvents}">
-            <a href="/edit">
-            <figure>
+            <a href="/edit" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+            <figure th:style="|height:${result}px|">
                 <h3 id = 'title' th:text="${event.topic}"></h3>
                 <p id = 'time' th:text="${event.time}">time</p>
-                <p id = 'duration' th:text="${event.duration}">duration</p>
+                <p> - </p>
+                <p id = 'time' th:text="${event.endTime}">endTime</p>
               </figure>
             </a>
 
         </tr>
-          <figure>
-            <h3 id = 'title'>CSS Master Class</h3>
-            <p id = 'time'> 9:30</p>
-            <p id = 'duration'>30 mins</p>
-          </figure>
+
         </div>
         <div class="column" style="background-color:#bbb;">
           <h2>Tuesday</h2>
-          <p>Some text..</p>
+          <tr th:each="event: ${tuesdayEvents}">
+            <a href="/edit">
+            <figure>
+                <h3 id = 'title' th:text="${event.topic}"></h3>
+                <p id = 'time' th:text="${event.time}">time</p>
+                <p> - </p>
+                <p id = 'time' th:text="${event.endTime}">endTime</p>
+              </figure>
+            </a>
+
+        </tr>
         </div>
         <div class="column" style="background-color:#ccc;">
           <h2>Wednesday</h2>
-          <p>Some text..</p>
+          <tr th:each="event: ${wednesdayEvents}">
+            <a href="/edit">
+            <figure>
+                <h3 id = 'title' th:text="${event.topic}"></h3>
+                <p id = 'time' th:text="${event.time}">time</p>
+                <p> - </p>
+                <p id = 'time' th:text="${event.endTime}">endTime</p>
+              </figure>
+            </a>
+
+        </tr>
         </div>
         <div class="column" style="background-color:#ddd;">
           <h2>Thursday</h2>
-          <p>Some text..</p>
+          <tr th:each="event: ${thursdayEvents}">
+            <a href="/edit">
+            <figure>
+                <h3 id = 'title' th:text="${event.topic}"></h3>
+                <p id = 'time' th:text="${event.time}">time</p>
+                <p> - </p>
+                <p id = 'time' th:text="${event.endTime}">endTime</p>
+              </figure>
+            </a>
+
+        </tr>
         </div>
         <div class="column" style="background-color:#ddd;">
             <h2>Friday</h2>
-            <p>Some text..</p>
+            <tr th:each="event: ${fridayEvents}">
+              <a href="/edit">
+              <figure>
+                  <h3 id = 'title' th:text="${event.topic}"></h3>
+                  <p id = 'time' th:text="${event.time}">time</p>
+                  <p> - </p>
+                  <p id = 'time' th:text="${event.endTime}">endTime</p>
+                </figure>
+              </a>
+  
+          </tr>
         </div>
         <div class="column" style="background-color:#ddd;">
             <h2>Saturday</h2>
-            <p>Some text..</p>
+            <tr th:each="event: ${saturdayEvents}">
+              <a href="/edit">
+              <figure>
+                  <h3 id = 'title' th:text="${event.topic}"></h3>
+                  <p id = 'time' th:text="${event.time}">time</p>
+                  <p> - </p>
+                  <p id = 'time' th:text="${event.endTime}">endTime</p>
+                </figure>
+              </a>
+  
+          </tr>
         </div>
         <div class="column" style="background-color:#ddd;">
             <h2>Sunday</h2>
-            <p>Some text..</p>
+            <tr th:each="event: ${sundayEvents}">
+              <a href="/edit">
+              <figure>
+                  <h3 id = 'title' th:text="${event.topic}"></h3>
+                  <p id = 'time' th:text="${event.time}">time</p>
+                  <p> - </p>
+                  <p id = 'time' th:text="${event.endTime}">endTime</p>
+                </figure>
+              </a>
+  
+          </tr>
         </div>
       </div>
     

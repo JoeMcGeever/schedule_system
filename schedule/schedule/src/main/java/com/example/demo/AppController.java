@@ -45,25 +45,25 @@ public class AppController {
                 page = 1;
             }    
 
-            LocalDateTime lastMonday = event_service.getWeekCommencingDate(page); //gets the last monday date
-            List<Event> weeklyEvents = event_service.getWeeklyEvents(lastMonday, (authentication.getName())); //sends to the getWeeklyEvents function
+            LocalDate lastMonday = event_service.getWeekCommencingDate(page); //gets the last monday date
+            List<Event>[] weeklyEvents = event_service.getWeeklyEvents(lastMonday, (authentication.getName())); //sends to the getWeeklyEvents function
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //format the last monday date to display on page
             String weekCommencing = dtf.format(lastMonday);  
 
-            System.out.println(weeklyEvents.size());
+            System.out.println(weeklyEvents.length);
 
             model.addAttribute("footer", page); //send current page number
             model.addAttribute("weekCommencing", "Week commencing: " + weekCommencing); //send week commencing information
 
             
-            model.addAttribute("mondayEvents", weeklyEvents); //send events for each day to be displayed
-            model.addAttribute("tuesdayEvents", weeklyEvents); //send events for each day to be displayed
-            model.addAttribute("wednesdayEvents", weeklyEvents); //send events for each day to be displayed
-            model.addAttribute("thursdayEvents", weeklyEvents); //send events for each day to be displayed
-            model.addAttribute("fridayEvents", weeklyEvents); //send events for each day to be displayed
-            model.addAttribute("satudayEvents", weeklyEvents); //send events for each day to be displayed
-            model.addAttribute("sundayEvents", weeklyEvents); //send events for each day to be displayed
+            model.addAttribute("mondayEvents", weeklyEvents[0]); //send events for each day to be displayed
+            model.addAttribute("tuesdayEvents", weeklyEvents[1]); //send events for each day to be displayed
+            model.addAttribute("wednesdayEvents", weeklyEvents[2]); //send events for each day to be displayed
+            model.addAttribute("thursdayEvents", weeklyEvents[3]); //send events for each day to be displayed
+            model.addAttribute("fridayEvents", weeklyEvents[4]); //send events for each day to be displayed
+            model.addAttribute("saturdayEvents", weeklyEvents[5]); //send events for each day to be displayed
+            model.addAttribute("sundayEvents", weeklyEvents[6]); //send events for each day to be displayed
             
             return "index";
         } else {

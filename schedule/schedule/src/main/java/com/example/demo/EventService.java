@@ -1,16 +1,19 @@
 package com.example.demo;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 
 import org.dom4j.rule.NullAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 @Transactional
@@ -23,20 +26,48 @@ public class EventService {
     //     return repo.findAll();
     // }
 
-    public List<Event> getWeeklyEvents(LocalDateTime recentMonday, String username) {
-        //startDate = current date + 7*weekNumber days
-        //endDate = startDate + 7 days (maybe do before 8 days)
-        //find all events between start and end with username
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd"); 
+    public List<Event>[] getWeeklyEvents(LocalDate recentMonday, String username) { //returns the list of lists of each day events for the given week: monday = 0, tue=1 etc
+
+        List<Event>[] weeklyEvents = (List<Event>[]) new List[7];
+
+
+        for(int j = 0; j<7; j++){
+            weeklyEvents[j] = new ArrayList<Event>();
+        }
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //changed from yyyy/MM/dd
         
         String currentDate = dtf.format(recentMonday);  //needs to always show last monday
         String weekEnd = dtf.format(recentMonday.plusDays(6)); //gets the end of the week
 
-        return repo.findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(weekEnd, currentDate, username);
+
+        
+
+        List<Event> allEvents = repo.findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(weekEnd, currentDate, username);
+        for(int i = 0; i<allEvents.size(); i++){
+            LocalDate instanceDate = LocalDate.parse(allEvents.get(i).getDate(), dtf);
+            int daysBetween = (int) ChronoUnit.DAYS.between(recentMonday, instanceDate); //get the number of days from this weeks monday
+            //and therefore the index for where I want to place the event
+
+            System.out.println("-------------------");
+            System.out.println("Monday date:");
+            System.out.println(recentMonday);
+            System.out.println("Instance date:");
+            System.out.println(instanceDate);
+            System.out.println("Days between the monday and the day in question");
+            System.out.println(daysBetween);
+            System.out.println("-------------------");
+
+            
+            
+            weeklyEvents[daysBetween].add(allEvents.get(i)); //add at the relevant index 
+        }
+
+        return weeklyEvents;
     }
 
-    public LocalDateTime getWeekCommencingDate(int weekNumber){
-        LocalDateTime now = LocalDateTime.now();
+    public LocalDate getWeekCommencingDate(int weekNumber){
+        LocalDate now = LocalDate.now();
 
         if(weekNumber<0){ // if the page is below 0
             weekNumber += 1 ; // Add one to work with plusDays - if weekNumber==-1 set weekNumber to 0
@@ -55,6 +86,11 @@ public class EventService {
 
 
     public String save(Event eventInstance) { //returns true if successfully adds the event
+
+        LocalTime eventTimeStart = LocalTime.parse( eventInstance.getTime() ) ; //gets the starting time of the users new event
+        LocalTime eventTimeEnd = eventTimeStart.plus(eventInstance.getDuration(), ChronoUnit.MINUTES); //gets the ending time
+        String endTime = eventTimeEnd.toString();
+        eventInstance.setEndTime(endTime);
         String errorMessage = checkEventClash(eventInstance);
         if(errorMessage==null){
             repo.save(eventInstance);
@@ -65,16 +101,15 @@ public class EventService {
     }
 
     public String checkEventClash(Event eventInstance){ // returns true if no timetable clash
+
+        
         List<Event> events = repo.findByDateAndTraineeName(eventInstance.getDate(), eventInstance.getTrainee());
-
+        
         LocalTime eventTimeStart = LocalTime.parse( eventInstance.getTime() ) ; //gets the starting time of the users new event
-        LocalTime eventTimeEnd = eventTimeStart.plus(eventInstance.getDuration(), ChronoUnit.MINUTES); //gets the ending time
-
+        LocalTime eventTimeEnd = LocalTime.parse( eventInstance.getEndTime() ) ; //gets the ending time
         for (int i = 0; i < events.size(); i++) { //loop through all events the user already has on that day
             LocalTime iTime = LocalTime.parse( events.get(i).getTime() ) ; //get the current loop instance starting time
-            LocalTime iEndTime = iTime.plus(events.get(i).getDuration(), ChronoUnit.MINUTES); //get the duration
-
-
+            LocalTime iEndTime = LocalTime.parse(events.get(i).getEndTime()); //get the duration
             if(eventTimeStart == iTime || eventTimeEnd == iEndTime){ //is before and is after do not include if they are the same, so breaks logic
                 return events.get(i).getTopic();
             }

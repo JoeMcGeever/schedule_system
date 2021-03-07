@@ -53,6 +53,7 @@ figure {
   padding: 1em;
   object-fit: cover;
   border-radius: 1em;
+  text-align:center;
   overflow: hidden;
   box-shadow: 3px 3px 22px -7px rgba(0,0,0,0.75);
     justify-content: space-evenly;
@@ -62,6 +63,8 @@ figure {
 
 p {
   font-size: 0.8em;
+  vertical-align:top;
+  display:inline-block;
 }
 
 

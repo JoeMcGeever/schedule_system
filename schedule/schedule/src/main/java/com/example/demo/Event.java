@@ -32,6 +32,9 @@ public class Event {
     @Column(name="time")
     private String time; //string??
 
+    @Column(name="endtime")
+    private String endTime; //string??
+
     @Column(name="duration")
     private int duration;
     
@@ -82,6 +85,14 @@ public class Event {
 
     public void setTime(String time) {
       this.time = time;
+    } 
+
+    public String getEndTime() {
+      return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+      this.endTime = endTime;
     } 
 
     public int getDuration() {
