@@ -27,13 +27,9 @@
     <div class="row">
         <div class="column" style="background-color:#aaa;">
           <h2>Monday</h2>
-          <!-- 
-              For each element in the Monday tag
-              element consists of: eventID (for href), title, timeStart-timeFin, duration
-              Duration dictates the height of the element
-           -->
+
         <tr th:each="event: ${mondayEvents}">
-            <a href="/edit" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+            <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
             <figure th:style="|height:${result}px|">
                 <h3 id = 'title' th:text="${event.topic}"></h3>
                 <p id = 'time' th:text="${event.time}">time</p>
@@ -48,8 +44,8 @@
         <div class="column" style="background-color:#bbb;">
           <h2>Tuesday</h2>
           <tr th:each="event: ${tuesdayEvents}">
-            <a href="/edit">
-            <figure>
+            <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+              <figure th:style="|height:${result}px|">
                 <h3 id = 'title' th:text="${event.topic}"></h3>
                 <p id = 'time' th:text="${event.time}">time</p>
                 <p> - </p>
@@ -62,8 +58,8 @@
         <div class="column" style="background-color:#ccc;">
           <h2>Wednesday</h2>
           <tr th:each="event: ${wednesdayEvents}">
-            <a href="/edit">
-            <figure>
+            <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+              <figure th:style="|height:${result}px|">
                 <h3 id = 'title' th:text="${event.topic}"></h3>
                 <p id = 'time' th:text="${event.time}">time</p>
                 <p> - </p>
@@ -76,8 +72,8 @@
         <div class="column" style="background-color:#ddd;">
           <h2>Thursday</h2>
           <tr th:each="event: ${thursdayEvents}">
-            <a href="/edit">
-            <figure>
+            <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+              <figure th:style="|height:${result}px|">
                 <h3 id = 'title' th:text="${event.topic}"></h3>
                 <p id = 'time' th:text="${event.time}">time</p>
                 <p> - </p>
@@ -90,8 +86,8 @@
         <div class="column" style="background-color:#ddd;">
             <h2>Friday</h2>
             <tr th:each="event: ${fridayEvents}">
-              <a href="/edit">
-              <figure>
+              <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+                <figure th:style="|height:${result}px|">
                   <h3 id = 'title' th:text="${event.topic}"></h3>
                   <p id = 'time' th:text="${event.time}">time</p>
                   <p> - </p>
@@ -104,8 +100,8 @@
         <div class="column" style="background-color:#ddd;">
             <h2>Saturday</h2>
             <tr th:each="event: ${saturdayEvents}">
-              <a href="/edit">
-              <figure>
+              <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+                <figure th:style="|height:${result}px|">
                   <h3 id = 'title' th:text="${event.topic}"></h3>
                   <p id = 'time' th:text="${event.time}">time</p>
                   <p> - </p>
@@ -118,8 +114,8 @@
         <div class="column" style="background-color:#ddd;">
             <h2>Sunday</h2>
             <tr th:each="event: ${sundayEvents}">
-              <a href="/edit">
-              <figure>
+              <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
+                <figure th:style="|height:${result}px|">
                   <h3 id = 'title' th:text="${event.topic}"></h3>
                   <p id = 'time' th:text="${event.time}">time</p>
                   <p> - </p>

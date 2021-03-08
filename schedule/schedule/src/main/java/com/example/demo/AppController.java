@@ -107,6 +107,35 @@ public class AppController {
         //this error could be if there is a timetabling clash
     }
 
+    @RequestMapping("/details")
+    public String viewLoginPage(Model model, Authentication authentication, @RequestParam(value="id", required = true) int eventID) {
+        String username = authentication.getName();
+        
+        Event eventDetails = event_service.getEvent(eventID);
+
+        if(!eventDetails.getTrainee().equals(username)){ //if the user is not the creator of the event, return to index
+            return "redirect:/";
+        }
+
+        
+        model.addAttribute("eventDetails", eventDetails); //add the event details
+
+        List<Learner> attendenceList = learner_service.getAttendance(eventID); //get all attending learners
+
+        System.out.println(attendenceList.size());
+        
+        for(int i = 0; i < attendenceList.size(); i++){
+            System.out.println(attendenceList.get(i).getUsername());
+        }
+        
+        model.addAttribute("attendenceList", attendenceList);
+
+
+        //need to also get the users already signed up ---> user service
+        //return "details";
+        return "index";
+    }
+
        
 
 }

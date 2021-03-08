@@ -32,7 +32,7 @@ public class EventService {
 
 
         for(int j = 0; j<7; j++){
-            weeklyEvents[j] = new ArrayList<Event>();
+            weeklyEvents[j] = new ArrayList<Event>(); //create empty lists of events in all 7 array slots (one for each day of the week)
         }
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //changed from yyyy/MM/dd
@@ -48,7 +48,6 @@ public class EventService {
             LocalDate instanceDate = LocalDate.parse(allEvents.get(i).getDate(), dtf);
             int daysBetween = (int) ChronoUnit.DAYS.between(recentMonday, instanceDate); //get the number of days from this weeks monday
             //and therefore the index for where I want to place the event
-
             System.out.println("-------------------");
             System.out.println("Monday date:");
             System.out.println(recentMonday);
@@ -58,8 +57,6 @@ public class EventService {
             System.out.println(daysBetween);
             System.out.println("-------------------");
 
-            
-            
             weeklyEvents[daysBetween].add(allEvents.get(i)); //add at the relevant index 
         }
 
@@ -127,8 +124,14 @@ public class EventService {
     }
 
         
-    // public void delete(String name) {
-    //     repo.deleteByUsername(name); //username - primary key in the User table
-    // }          
+    public void delete(int eventID) {
+        repo.deleteByEventID(eventID);; //username - primary key in the User table
+    }          
+
+    public Event getEvent(int eventID){
+        return repo.findByEventID(eventID);
+    }
+
+
 }
 

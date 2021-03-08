@@ -4,10 +4,10 @@ import javax.persistence.*;
 
 @Entity
 public class Learner extends User {
-    @Column(name="companyName")
+    @Column(name="companyname")
     private String companyName;
 
-    @Column(name="skillLevel")
+    @Column(name="skilllevel")
     private String skillLevel;
 
     public String getCompanyName() {

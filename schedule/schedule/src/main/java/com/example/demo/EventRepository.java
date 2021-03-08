@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface EventRepository extends JpaRepository<Event, String> {
 
     public void deleteByEventID(int eventID); //eventID - primary key in the Event table
+    public Event findByEventID(int eventID);
     public List<Event> findByDateAndTraineeName(String date, String traineeName);
     // public List<Event> findByTraineeNameAnd... --> find all events between 2 dates and from the given user
     public List<Event> findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(String endDate, String startDate, String traineeName);

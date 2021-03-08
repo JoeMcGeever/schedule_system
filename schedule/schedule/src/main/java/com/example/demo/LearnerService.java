@@ -12,19 +12,8 @@ public class LearnerService {
     @Autowired
     private LearnerRepository repo;
 
-    public List<Learner> listAll() {
-        return repo.findAll();
+    public List<Learner> getAttendance(int eventID) {
+        return repo.getAttendingUsers(eventID);
     }
-
-    public void save(Learner user) {
-        repo.save(user);
-    }
-
-    public User get(String mode) {
-        return repo.findByDtype(mode); //findByDtype: the default method to find a sub-type
-    }
-        
-    public void delete(String username) {
-        repo.deleteByUsername(username); //username - primary key in the User table
-    }          
+      
 }
