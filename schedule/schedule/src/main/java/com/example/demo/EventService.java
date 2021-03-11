@@ -48,14 +48,14 @@ public class EventService {
             LocalDate instanceDate = LocalDate.parse(allEvents.get(i).getDate(), dtf);
             int daysBetween = (int) ChronoUnit.DAYS.between(recentMonday, instanceDate); //get the number of days from this weeks monday
             //and therefore the index for where I want to place the event
-            System.out.println("-------------------");
-            System.out.println("Monday date:");
-            System.out.println(recentMonday);
-            System.out.println("Instance date:");
-            System.out.println(instanceDate);
-            System.out.println("Days between the monday and the day in question");
-            System.out.println(daysBetween);
-            System.out.println("-------------------");
+            // System.out.println("-------------------");
+            // System.out.println("Monday date:");
+            // System.out.println(recentMonday);
+            // System.out.println("Instance date:");
+            // System.out.println(instanceDate);
+            // System.out.println("Days between the monday and the day in question");
+            // System.out.println(daysBetween);
+            // System.out.println("-------------------");
 
             weeklyEvents[daysBetween].add(allEvents.get(i)); //add at the relevant index 
         }
@@ -84,10 +84,7 @@ public class EventService {
 
     public String save(Event eventInstance) { //returns true if successfully adds the event
 
-        LocalTime eventTimeStart = LocalTime.parse( eventInstance.getTime() ) ; //gets the starting time of the users new event
-        LocalTime eventTimeEnd = eventTimeStart.plus(eventInstance.getDuration(), ChronoUnit.MINUTES); //gets the ending time
-        String endTime = eventTimeEnd.toString();
-        eventInstance.setEndTime(endTime);
+        setEndTime(eventInstance);
         String errorMessage = checkEventClash(eventInstance);
         if(errorMessage==null){
             repo.save(eventInstance);
@@ -97,14 +94,35 @@ public class EventService {
         }
     }
 
+    public void setEndTime(Event eventInstance){
+        LocalTime eventTimeStart = LocalTime.parse( eventInstance.getTime() ) ; //gets the starting time of the users new event
+        LocalTime eventTimeEnd = eventTimeStart.plus(eventInstance.getDuration(), ChronoUnit.MINUTES); //gets the ending time
+        String endTime = eventTimeEnd.toString();
+        eventInstance.setEndTime(endTime);
+    }
+
     public String checkEventClash(Event eventInstance){ // returns true if no timetable clash
 
-        
+        System.out.println("check event clash here");
         List<Event> events = repo.findByDateAndTraineeName(eventInstance.getDate(), eventInstance.getTrainee());
         
         LocalTime eventTimeStart = LocalTime.parse( eventInstance.getTime() ) ; //gets the starting time of the users new event
         LocalTime eventTimeEnd = LocalTime.parse( eventInstance.getEndTime() ) ; //gets the ending time
         for (int i = 0; i < events.size(); i++) { //loop through all events the user already has on that day
+
+
+
+            if(eventInstance.eventID() == events.get(i).eventID()){ //for edit -> if they have the same id, then do not worry about clashing
+                continue;
+            }
+
+            
+            System.out.println(events.get(i).getTopic() + " is an event on this day: " + events.get(i).getTime() + " - " + events.get(i).getEndTime());
+            System.out.println("VS");
+            System.out.println(eventInstance.getTopic() + " is the new event: " + eventInstance.getTime() + " - " + eventInstance.getEndTime());
+
+
+
             LocalTime iTime = LocalTime.parse( events.get(i).getTime() ) ; //get the current loop instance starting time
             LocalTime iEndTime = LocalTime.parse(events.get(i).getEndTime()); //get the duration
             if(eventTimeStart == iTime || eventTimeEnd == iEndTime){ //is before and is after do not include if they are the same, so breaks logic

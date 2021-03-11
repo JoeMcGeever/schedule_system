@@ -53,8 +53,8 @@ figure {
   padding: 1em;
   object-fit: cover;
   border-radius: 1em;
-  text-align:center;
   overflow: hidden;
+  max-width: 250px;
   box-shadow: 3px 3px 22px -7px rgba(0,0,0,0.75);
     justify-content: space-evenly;
   flex-wrap: wrap;
@@ -166,7 +166,7 @@ ul {
 	flex-wrap: nowrap;
 	align-items: center;
 	/* background-color: rgba(19, 127, 221, 0.8); */
-	/* height: 3em; */
+	height: 4em;
 	justify-content: space-evenly;
 }
 li {
@@ -175,7 +175,6 @@ li {
 	display: inline-block;
 	flex-basis: 8em;
 	/* border: 1px solid grey; */
-	height: 2em;
 	text-align: center;
 	text-transform: uppercase;
 	padding-top: 1em;

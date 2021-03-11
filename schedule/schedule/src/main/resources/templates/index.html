@@ -24,6 +24,10 @@
     <!-- WEEK COMMENCING INFO HERE -->
     <h1 th:text="${weekCommencing}"></h1>
 
+    <p th:if="${addError}" class="error">
+      <a th:utext="${addErrorMessage}"></a>
+    </p>  
+
     <div class="row">
         <div class="column" style="background-color:#aaa;">
           <h2>Monday</h2>

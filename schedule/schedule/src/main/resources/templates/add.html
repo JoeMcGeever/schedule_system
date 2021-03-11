@@ -3,11 +3,22 @@
 <head> 
     <title>Add Event</title>
     <meta charset = "ISO-8859-1" />
-       <link href="../static/css/login.css"
-          th:href="@{css/login.css}" rel="stylesheet" media="screen"/>
+       <link href="../static/css/main.css"
+          th:href="@{css/main.css}" rel="stylesheet" media="screen"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+        <!-- <header>
+        <img src = "./images/logo.png">
+	</header> -->
+    
+	<nav>
+		<ul>
+            <li><a href="/">Home</a></li>
+			<li><a href="/logout" id="logout">Logout</a></li>
+		</ul>
+	</nav>
+<main>
     <figure>
         <form th:action="@{/add}" method="post">
             <p><label>Topic title:</label><br />
@@ -38,5 +49,6 @@
         </p>  
                 
         </figure>
+        </main>
 </body>
 </html> 

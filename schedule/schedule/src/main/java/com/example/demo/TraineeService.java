@@ -34,16 +34,15 @@ public class TraineeService implements UserDetailsService{
         repo.save(user);
     }
 
-    public User get(String mode) {
-        return repo.findByDtype(mode); //findByDtype: the default method to find a sub-type
-    }
 
     public User getUser(String username) {
         return repo.findByUsername(username); //get a user by username
     }
-        
-    public void delete(String username) {
-        repo.deleteByUsername(username); //username - primary key in the User table
-    }          
+    
+    public void deleteRegistrationInstance(int eventID, String user ) {
+
+        System.out.println(repo.deleteRegistration(eventID, user));
+    }
+             
 }
 

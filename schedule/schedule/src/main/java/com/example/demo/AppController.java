@@ -51,7 +51,6 @@ public class AppController {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //format the last monday date to display on page
             String weekCommencing = dtf.format(lastMonday);  
 
-            System.out.println(weeklyEvents.length);
 
             model.addAttribute("footer", page); //send current page number
             model.addAttribute("weekCommencing", "Week commencing: " + weekCommencing); //send week commencing information
@@ -122,19 +121,104 @@ public class AppController {
 
         List<Learner> attendenceList = learner_service.getAttendance(eventID); //get all attending learners
 
-        System.out.println(attendenceList.size());
+        //System.out.println(attendenceList.size());
         
         for(int i = 0; i < attendenceList.size(); i++){
             System.out.println(attendenceList.get(i).getUsername());
         }
         
         model.addAttribute("attendenceList", attendenceList);
+        LocalDate today = LocalDate.now();
+
+        LocalDate eventDate = LocalDate.parse(eventDetails.getDate());
+
+        System.out.println(today.compareTo(eventDate));
+        System.out.println(eventDate.compareTo(today));
 
 
-        //need to also get the users already signed up ---> user service
-        //return "details";
-        return "index";
+        if(today.compareTo(eventDate)<=-1){ //if the event is at least a day ahead in the future
+            System.out.println("Editable");
+            model.addAttribute("edit", true); //then allow it to be edited
+        } else {
+            model.addAttribute("edit", false);
+        }
+
+        return "details";
     }
+
+    @RequestMapping("/edit")
+    public ModelAndView editEvent(Model model, Authentication authentication, @RequestParam(value="id", required = true) int eventID) {
+        String username = authentication.getName();
+        Event eventDetails = event_service.getEvent(eventID);
+        if(!eventDetails.getTrainee().equals(username)){ //if the user is not the creator of the event, return to index
+            ModelAndView mav = new ModelAndView("/");
+            return mav;
+        }
+
+        ModelAndView mav = new ModelAndView("edit");
+        mav.addObject("eventDetails", eventDetails);
+        
+        model.addAttribute("eventDetails", eventDetails); //add the event details
+
+
+        return mav;
+    }
+
+
+    
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST) 
+    public String updateEvent(@ModelAttribute("event") Event event, Authentication authentication, Model model, @RequestParam(value="id", required = true) int eventID){
+
+        Event originalEvent = event_service.getEvent(eventID);
+
+        String originalTopic = originalEvent.getTopic(); //store the original event details 
+        int originalClassSize = originalEvent.getClassSize();
+        String originalLocation = originalEvent.getLocation();
+        String originalDate = originalEvent.getDate();
+        String originalTime = originalEvent.getTime();
+        int originalDuration = originalEvent.getDuration();
+
+        originalEvent.setTopic(event.getTopic()); //set the new values
+        originalEvent.setClassSize(event.getClassSize());
+        originalEvent.setLocation(event.getLocation());
+        originalEvent.setDate(event.getDate());
+        originalEvent.setTime(event.getTime());
+        if(event.getDuration()!=0){ //0 value on the select for duration means nothing changed
+            originalEvent.setDuration(event.getDuration());
+        }
+        
+
+        String errorMessage = event_service.save(originalEvent); //save the updated values
+        if(errorMessage != null){ //if the saving fails, and false is returned
+
+            //if there is a clash: reset all of the event details:
+            originalEvent.setTopic(originalTopic);
+            originalEvent.setClassSize(originalClassSize);
+            originalEvent.setLocation(originalLocation);
+            originalEvent.setDate(originalDate);
+            originalEvent.setTime(originalTime);
+            originalEvent.setDuration(originalDuration);
+            event_service.setEndTime(originalEvent);
+
+            System.out.println("Error: This clashes with your " + errorMessage);
+            model.addAttribute("addError", true);
+            model.addAttribute("addErrorMessage", "Error: <br>This clashes with your '" + errorMessage + "' class!<p></p>");
+            return viewHomePage(model, authentication, 1); //return to the home page
+        }
+        model.addAttribute("addError", true);
+        model.addAttribute("addErrorMessage", "Successfully Updated!");
+        return "redirect:/";
+    }
+
+
+
+
+    @RequestMapping("/delete_attendee")  
+    public String deleteAttendee(Model model, @RequestParam(value="username", required = true) String user , @RequestParam(value="id", required = true) int eventID) {   
+        trainee_service.deleteRegistrationInstance(eventID, user);
+        return "add.html";  
+    }  
 
        
 
