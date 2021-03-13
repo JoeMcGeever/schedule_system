@@ -26,10 +26,6 @@ public class TraineeService implements UserDetailsService{
         return new SignedInUser(user);
     }
 
-    public List<Trainee> listAll() {
-        return repo.findAll();
-    }
-
     public void save(Trainee user) {
         repo.save(user);
     }

@@ -18,11 +18,11 @@ public class Learner extends User {
         this.companyName = companyName;
     }
 
-    public String getskillLevel() {
+    public String getSkillLevel() {
         return skillLevel;
     }
 
-    public void setskillLevel(String skillLevel) {
+    public void setSkillLevel(String skillLevel) {
         this.skillLevel = skillLevel;
     }
 }

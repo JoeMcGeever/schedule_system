@@ -8,9 +8,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<!-- <header>
-        <img src = "./images/logo.png">
-	</header> -->
+  <header>
+        <img src = "images/logo.png">
+	</header>
     
 	<nav>
 		<ul>
@@ -21,6 +21,8 @@
 
   <main>
     
+
+
     <!-- WEEK COMMENCING INFO HERE -->
     <h1 th:text="${weekCommencing}"></h1>
 
@@ -29,9 +31,20 @@
     </p>  
 
     <div class="row">
-        <div class="column" style="background-color:#aaa;">
-          <h2>Monday</h2>
 
+
+
+
+      <div2 th:if="${currentDay}==1">
+        <div class="column" style="background-color:greenyellow;">
+     </div2>
+     <div2 th:if="${currentDay}<1">
+      <div class="column" style="background-color: #ddd;">
+     </div2>
+     <div2 th:if="${currentDay}>1">
+      <div class="column" style="background-color: #aaa;">
+     </div2>
+          <h2>Monday</h2>
         <tr th:each="event: ${mondayEvents}">
             <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
             <figure th:style="|height:${result}px|">
@@ -41,11 +54,20 @@
                 <p id = 'time' th:text="${event.endTime}">endTime</p>
               </figure>
             </a>
-
         </tr>
-
         </div>
-        <div class="column" style="background-color:#bbb;">
+
+
+
+        <div2 th:if="${currentDay}==2">
+          <div class="column" style="background-color:greenyellow;">
+       </div2>
+       <div2 th:if="${currentDay}<2">
+        <div class="column" style="background-color: #ddd;">
+       </div2>
+       <div2 th:if="${currentDay}>2">
+        <div class="column" style="background-color: #aaa;">
+       </div2>
           <h2>Tuesday</h2>
           <tr th:each="event: ${tuesdayEvents}">
             <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
@@ -59,7 +81,15 @@
 
         </tr>
         </div>
-        <div class="column" style="background-color:#ccc;">
+        <div2 th:if="${currentDay}==3">
+          <div class="column" style="background-color:greenyellow;">
+       </div2>
+       <div2 th:if="${currentDay}<3">
+        <div class="column" style="background-color: #ddd;">
+       </div2>
+       <div2 th:if="${currentDay}>3">
+        <div class="column" style="background-color: #aaa;">
+       </div2>
           <h2>Wednesday</h2>
           <tr th:each="event: ${wednesdayEvents}">
             <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
@@ -73,7 +103,15 @@
 
         </tr>
         </div>
-        <div class="column" style="background-color:#ddd;">
+        <div2 th:if="${currentDay}==4">
+          <div class="column" style="background-color:greenyellow;">
+       </div2>
+       <div2 th:if="${currentDay}<4">
+        <div class="column" style="background-color: #ddd;">
+       </div2>
+       <div2 th:if="${currentDay}>4">
+        <div class="column" style="background-color: #aaa;">
+       </div2>
           <h2>Thursday</h2>
           <tr th:each="event: ${thursdayEvents}">
             <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
@@ -87,7 +125,15 @@
 
         </tr>
         </div>
-        <div class="column" style="background-color:#ddd;">
+        <div2 th:if="${currentDay}==5">
+          <div class="column" style="background-color:greenyellow;">
+       </div2>
+       <div2 th:if="${currentDay}<5">
+        <div class="column" style="background-color: #ddd;">
+       </div2>
+       <div2 th:if="${currentDay}>5">
+        <div class="column" style="background-color: #aaa;">
+       </div2>
             <h2>Friday</h2>
             <tr th:each="event: ${fridayEvents}">
               <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
@@ -101,7 +147,15 @@
   
           </tr>
         </div>
-        <div class="column" style="background-color:#ddd;">
+        <div2 th:if="${currentDay}==6">
+          <div class="column" style="background-color:greenyellow;">
+       </div2>
+       <div2 th:if="${currentDay}<6">
+        <div class="column" style="background-color: #ddd;">
+       </div2>
+       <div2 th:if="${currentDay}>6">
+        <div class="column" style="background-color: #aaa;">
+       </div2>
             <h2>Saturday</h2>
             <tr th:each="event: ${saturdayEvents}">
               <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 
@@ -115,7 +169,15 @@
   
           </tr>
         </div>
-        <div class="column" style="background-color:#ddd;">
+        <div2 th:if="${currentDay}==7">
+          <div class="column" style="background-color:greenyellow;">
+       </div2>
+       <div2 th:if="${currentDay}<7">
+        <div class="column" style="background-color: #ddd;">
+       </div2>
+       <div2 th:if="${currentDay}>7">
+        <div class="column" style="background-color: #aaa;">
+       </div2>
             <h2>Sunday</h2>
             <tr th:each="event: ${sundayEvents}">
               <a th:href="@{/details(id=${event.eventID})}" th:with="result=${event.duration + 90}"> <!--Add 90 to duration to get height--> 

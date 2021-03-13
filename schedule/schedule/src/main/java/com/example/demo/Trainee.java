@@ -7,11 +7,11 @@ public class Trainee extends User {
     @Column(name="trainerbio") //case insensitive, but trainerBio does convert to trainer_bio
     private String trainerBio;
 
-    public String getGrade() {
+    public String getBio() {
         return trainerBio;
     }
 
-    public void setGrade(String trainerBio) {
+    public void setBio(String trainerBio) {
         this.trainerBio = trainerBio;
     }
 }

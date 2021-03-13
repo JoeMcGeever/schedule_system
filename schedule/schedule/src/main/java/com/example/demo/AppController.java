@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -55,6 +56,16 @@ public class AppController {
             model.addAttribute("footer", page); //send current page number
             model.addAttribute("weekCommencing", "Week commencing: " + weekCommencing); //send week commencing information
 
+
+            LocalDate now = LocalDate.now();
+
+            if(page==1){
+                model.addAttribute("currentDay", now.getDayOfWeek().getValue()); //gets the day of the week as a number
+            }else if(page==-1){ //this dictates the colour of the day (if it is in the past, present or future)
+                model.addAttribute("currentDay", "8");
+            }else{
+                model.addAttribute("currentDay", "0");
+            }
             
             model.addAttribute("mondayEvents", weeklyEvents[0]); //send events for each day to be displayed
             model.addAttribute("tuesdayEvents", weeklyEvents[1]); //send events for each day to be displayed
@@ -107,7 +118,7 @@ public class AppController {
     }
 
     @RequestMapping("/details")
-    public String viewLoginPage(Model model, Authentication authentication, @RequestParam(value="id", required = true) int eventID) {
+    public String viewDetailsPage(Model model, Authentication authentication, @RequestParam(value="id", required = true) int eventID) {
         String username = authentication.getName();
         
         Event eventDetails = event_service.getEvent(eventID);
@@ -147,7 +158,8 @@ public class AppController {
     }
 
     @RequestMapping("/edit")
-    public ModelAndView editEvent(Model model, Authentication authentication, @RequestParam(value="id", required = true) int eventID) {
+    public ModelAndView viewEditPage3 (Model model, Authentication authentication, @RequestParam(value="id", required = true) int eventID) {
+        
         String username = authentication.getName();
         Event eventDetails = event_service.getEvent(eventID);
         if(!eventDetails.getTrainee().equals(username)){ //if the user is not the creator of the event, return to index

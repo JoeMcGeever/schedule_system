@@ -8,9 +8,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-        <!-- <header>
-        <img src = "./images/logo.png">
-	</header> -->
+    <header>
+        <img src = "images/logo.png">
+	</header>
     
 	<nav>
 		<ul>
@@ -20,6 +20,7 @@
 		</ul>
 	</nav>
 <main>
+
     <figure>
         <form th:action="@{/edit(id=${eventDetails.eventID})}" th:object="${eventDetails}" method="post">
             <p><label>Topic title:</label><br />

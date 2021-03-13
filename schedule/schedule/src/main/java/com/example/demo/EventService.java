@@ -22,10 +22,6 @@ public class EventService {
     @Autowired
     private EventRepository repo;
 
-    // public List<Event> listAll() {
-    //     return repo.findAll();
-    // }
-
     public List<Event>[] getWeeklyEvents(LocalDate recentMonday, String username) { //returns the list of lists of each day events for the given week: monday = 0, tue=1 etc
 
         List<Event>[] weeklyEvents = (List<Event>[]) new List[7];
@@ -40,12 +36,9 @@ public class EventService {
         String currentDate = dtf.format(recentMonday);  //needs to always show last monday
         String weekEnd = dtf.format(recentMonday.plusDays(6)); //gets the end of the week
 
-
-        
-
         List<Event> allEvents = repo.findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(weekEnd, currentDate, username);
-        for(int i = 0; i<allEvents.size(); i++){
-            LocalDate instanceDate = LocalDate.parse(allEvents.get(i).getDate(), dtf);
+        for(int i = 0; i<allEvents.size(); i++){ //for each event
+            LocalDate instanceDate = LocalDate.parse(allEvents.get(i).getDate(), dtf); //get the date object
             int daysBetween = (int) ChronoUnit.DAYS.between(recentMonday, instanceDate); //get the number of days from this weeks monday
             //and therefore the index for where I want to place the event
             // System.out.println("-------------------");
@@ -82,7 +75,7 @@ public class EventService {
     }
 
 
-    public String save(Event eventInstance) { //returns true if successfully adds the event
+    public String save(Event eventInstance) { //returns null if successfully adds the event
 
         setEndTime(eventInstance);
         String errorMessage = checkEventClash(eventInstance);

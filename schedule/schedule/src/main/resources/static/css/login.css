@@ -26,17 +26,23 @@ header {
 	width:100%;
     text-align:center;
 	background-color: red;
-	padding-bottom: 0.5em;
 }
 
 
-
-/* header > img {
+header > img {
     display:inline-block;
     margin: 0 auto;
-    width:40%
-} */
+    width: 200px;
+}
 
 header strong {
 	color: green;
+}
+
+html { 
+  background: url("../images/background.jfif") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }

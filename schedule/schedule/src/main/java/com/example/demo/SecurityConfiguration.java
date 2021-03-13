@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http    
         .authorizeRequests()  
             .antMatchers( "/css/**").permitAll() // permits unauthorized access to the css directory 
+            .antMatchers( "/images/**").permitAll()
             .anyRequest().authenticated()  
                 .and()  
             .formLogin()  
@@ -50,9 +51,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll() //once signed in, everything is permitted
             .and()
             .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
-            // .and()
-            // .rememberMe().tokenRepository(persistentTokenRepository())
-            // .and();
 
 
     }  
@@ -62,13 +60,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }  
 
-    // @Bean
-    // public PersistentTokenRepository persistentTokenRepository(){
-    //     JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-    //     tokenRepository.setDataSource(datasource());
-	//     return tokenRepository;
-        
-    // }
     
 
 }

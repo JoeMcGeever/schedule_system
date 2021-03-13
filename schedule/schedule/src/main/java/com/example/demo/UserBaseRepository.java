@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @NoRepositoryBean
 public interface UserBaseRepository<T extends User> extends JpaRepository<T, String> {
 
-    public T findByDtype(String mode); //dtype - attribute in the User table for trainee or learner
-    public T findByUsername(String mode); //used for loggin in
+    public T findByUsername(String username); //used for loggin in
     public void deleteByUsername(String username); //username - primary key in the User table
 
     @Query(value = "SELECT * FROM User WHERE name IN (SELECT attendee FROM Attendance WHERE eventID=:eventID)", nativeQuery = true)
@@ -19,6 +18,6 @@ public interface UserBaseRepository<T extends User> extends JpaRepository<T, Str
 
     @Modifying
     @Query(value = "DELETE FROM Attendance WHERE eventID=:eventID AND attendee=:attendee", nativeQuery = true)
-    public int deleteRegistration(@Param("eventID") int eventID, @Param("attendee") String attendeeString);
+    public int deleteRegistration(@Param("eventID") int eventID, @Param("attendee") String attendee);
 
 }
