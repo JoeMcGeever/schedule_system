@@ -15,6 +15,10 @@ public class TraineeService implements UserDetailsService{
     @Autowired
     private TraineeRepository repo;
 
+    public List<Trainee> getAllTrainees(){
+        return repo.findAllBydtype("trainee");
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -40,5 +44,7 @@ public class TraineeService implements UserDetailsService{
         System.out.println(repo.deleteRegistration(eventID, user));
     }
              
+
+        
 }
 

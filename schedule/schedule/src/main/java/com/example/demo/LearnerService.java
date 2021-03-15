@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class LearnerService {
 
     @Autowired
-    private LearnerRepository repo;
+    private LearnerRepository repo;    
 
     public List<Learner> getAttendance(int eventID) {
         return repo.getAttendingUsers(eventID);

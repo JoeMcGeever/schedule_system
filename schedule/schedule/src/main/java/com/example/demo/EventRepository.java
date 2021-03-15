@@ -15,4 +15,8 @@ public interface EventRepository extends JpaRepository<Event, String> {
     public List<Event> findByDateAndTraineeName(String date, String traineeName);
     // public List<Event> findByTraineeNameAnd... --> find all events between 2 dates and from the given user
     public List<Event> findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(String endDate, String startDate, String traineeName);
+
+
+    public List<Event> findAllByTraineeNameAndDate(String traineeName, String date); //find all events a trainee has for a given day
+
 }

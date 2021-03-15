@@ -18,6 +18,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
 
 @Controller
 public class AppController {
@@ -30,9 +37,14 @@ public class AppController {
     private TraineeService trainee_service;
     @Autowired
     private LearnerService learner_service;
+    @Autowired
+    private EmailService email_service;
+
+
 
     @RequestMapping("/")
     public String viewHomePage(Model model, Authentication authentication, @RequestParam(value="page", required = false) Integer page) {
+
 
         User user = trainee_service.getUser(authentication.getName());
 
@@ -218,6 +230,15 @@ public class AppController {
             model.addAttribute("addErrorMessage", "Error: <br>This clashes with your '" + errorMessage + "' class!<p></p>");
             return viewHomePage(model, authentication, 1); //return to the home page
         }
+
+        List<Learner> attendingUsers = learner_service.getAttendance(originalEvent.eventID());
+        try{
+            email_service.email(originalEvent, attendingUsers); //email the updates to all attending users
+        } catch (MessagingException e) {
+            e.printStackTrace();
+    }
+
+
         model.addAttribute("addError", true);
         model.addAttribute("addErrorMessage", "Successfully Updated!");
         return "redirect:/";
@@ -233,5 +254,45 @@ public class AppController {
     }  
 
        
+
+
+
+
+
+    @Scheduled(cron ="0 0 04 * * *") //happens every day at 04:00 (change the 0 before to change the mins)
+    public void reportCron() {
+        
+        List<Trainee> allTrainees = trainee_service.getAllTrainees();
+
+        System.out.println(allTrainees.size());
+
+
+        for(int j = 0; j<allTrainees.size(); j++){ //loops through all trainees to see if they have any events for tomorrow
+
+            
+            String currentUser = allTrainees.get(j).getUsername(); //--> loop through each trainee in dB. userRepo.getAllByDType(trainee)
+        
+            List<Event> tomorrowsEvents = event_service.getTomorrowsEvents(currentUser); //get all events the user has tomorrow
+            String userEmail = trainee_service.getUser(currentUser).getEmail(); //get the users email
+
+
+
+
+            for(int i = 0; i<tomorrowsEvents.size(); i++){
+                System.out.println(i);
+
+                List<Learner> attendingUsers = learner_service.getAttendance(tomorrowsEvents.get(i).eventID());
+
+                try {
+                    email_service.email(tomorrowsEvents.get(i), attendingUsers, userEmail);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+            }
+        }
+
+        }
+
+
+	}
 
 }

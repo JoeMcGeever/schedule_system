@@ -144,5 +144,19 @@ public class EventService {
     }
 
 
+
+
+
+    public List<Event> getTomorrowsEvents(String traineeName) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+
+        String tomorrowsDate = dtf.format(tomorrow); 
+        
+        
+        return repo.findAllByTraineeNameAndDate(traineeName, tomorrowsDate);
+    }
+
+
 }
 
