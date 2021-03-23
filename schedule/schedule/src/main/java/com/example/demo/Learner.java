@@ -10,6 +10,11 @@ public class Learner extends User {
     @Column(name="skilllevel")
     private String skillLevel;
 
+    @Override
+    public String getDescription() {
+        return "From:" + companyName + ". Skill level: " + skillLevel;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -25,4 +30,6 @@ public class Learner extends User {
     public void setSkillLevel(String skillLevel) {
         this.skillLevel = skillLevel;
     }
+
+
 }

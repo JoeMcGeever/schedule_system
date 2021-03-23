@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,37 +23,23 @@ public class EventService {
     @Autowired
     private EventRepository repo;
 
-    public List<Event>[] getWeeklyEvents(LocalDate recentMonday, String username) { //returns the list of lists of each day events for the given week: monday = 0, tue=1 etc
-
+    public List<Event>[] getWeeklyEvents(LocalDate recentMonday, String username) { 
+    //returns the list of lists of each day events for the given week: monday = 0, tue=1 etc
         List<Event>[] weeklyEvents = (List<Event>[]) new List[7];
-
-
-        for(int j = 0; j<7; j++){
-            weeklyEvents[j] = new ArrayList<Event>(); //create empty lists of events in all 7 array slots (one for each day of the week)
-        }
-
+        for(int j = 0; j<7; j++){ 
+            weeklyEvents[j] = new ArrayList<Event>(); 
+        }//create empty lists of events in all 7 array slots (one for each day of the week)
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); //changed from yyyy/MM/dd
-        
         String currentDate = dtf.format(recentMonday);  //needs to always show last monday
         String weekEnd = dtf.format(recentMonday.plusDays(6)); //gets the end of the week
-
         List<Event> allEvents = repo.findAllByDateLessThanEqualAndDateGreaterThanEqualAndTraineeName(weekEnd, currentDate, username);
+        //make the JPA request
         for(int i = 0; i<allEvents.size(); i++){ //for each event
             LocalDate instanceDate = LocalDate.parse(allEvents.get(i).getDate(), dtf); //get the date object
-            int daysBetween = (int) ChronoUnit.DAYS.between(recentMonday, instanceDate); //get the number of days from this weeks monday
-            //and therefore the index for where I want to place the event
-            // System.out.println("-------------------");
-            // System.out.println("Monday date:");
-            // System.out.println(recentMonday);
-            // System.out.println("Instance date:");
-            // System.out.println(instanceDate);
-            // System.out.println("Days between the monday and the day in question");
-            // System.out.println(daysBetween);
-            // System.out.println("-------------------");
-
+            int daysBetween = (int) ChronoUnit.DAYS.between(recentMonday, instanceDate);
+            //get the number of days from this weeks monday and therefore the index for where I want to place the event
             weeklyEvents[daysBetween].add(allEvents.get(i)); //add at the relevant index 
         }
-
         return weeklyEvents;
     }
 
@@ -77,10 +64,12 @@ public class EventService {
 
     public String save(Event eventInstance) { //returns null if successfully adds the event
 
+    
         setEndTime(eventInstance);
-        String errorMessage = checkEventClash(eventInstance);
+        String errorMessage = checkEventClash(eventInstance); 
+        //checks if the event clashes with another event the user has created
         if(errorMessage==null){
-            repo.save(eventInstance);
+            repo.save(eventInstance); //calls the save function in the repo
             return null;
         }else{
             return errorMessage;
@@ -155,6 +144,14 @@ public class EventService {
         
         
         return repo.findAllByTraineeNameAndDate(traineeName, tomorrowsDate);
+    }
+
+
+    public void purgeEvents(LocalDate date){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateString = dtf.format(date);
+        repo.deleteByDateBefore(dateString);
+        return;
     }
 
 

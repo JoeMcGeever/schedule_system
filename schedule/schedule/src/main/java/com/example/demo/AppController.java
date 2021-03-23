@@ -46,20 +46,22 @@ public class AppController {
     public String viewHomePage(Model model, Authentication authentication, @RequestParam(value="page", required = false) Integer page) {
 
 
+
         User user = trainee_service.getUser(authentication.getName());
 
         
 
         if(user.getDtype().equals("trainee")){
 
-            //here is the plan:
             //get from the layer: all events for currently selected week (footer)
             if(page == null){
                 page = 1;
             }    
 
-            LocalDate lastMonday = event_service.getWeekCommencingDate(page); //gets the last monday date
-            List<Event>[] weeklyEvents = event_service.getWeeklyEvents(lastMonday, (authentication.getName())); //sends to the getWeeklyEvents function
+            LocalDate lastMonday = event_service.getWeekCommencingDate(page);
+             //gets the last monday date
+            List<Event>[] weeklyEvents = event_service.getWeeklyEvents(lastMonday, (authentication.getName()));
+             //sends to the getWeeklyEvents function
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //format the last monday date to display on page
             String weekCommencing = dtf.format(lastMonday);  
@@ -114,9 +116,7 @@ public class AppController {
     //to save a new event to the database      
     @RequestMapping(value = "/add", method = RequestMethod.POST) 
     public String saveFullTimeUser(@ModelAttribute("event") Event event, Authentication authentication, Model model){    
-        
         event.setTrainee(authentication.getName()); //set the trainee name 
-        
         String errorMessage = event_service.save(event);
         if(errorMessage != null){ //if the saving fails, and false is returned
             model.addAttribute("addError", true);
@@ -125,8 +125,6 @@ public class AppController {
         } //save to Event table
         //if success:        
         return "redirect:/"; //return to index page  
-        //otherwise, return an error -- load add.html but add a true statement to an error value in model.
-        //this error could be if there is a timetabling clash
     }
 
     @RequestMapping("/details")
@@ -250,7 +248,7 @@ public class AppController {
     @RequestMapping("/delete_attendee")  
     public String deleteAttendee(Model model, @RequestParam(value="username", required = true) String user , @RequestParam(value="id", required = true) int eventID) {   
         trainee_service.deleteRegistrationInstance(eventID, user);
-        return "add.html";  
+        return "redirect:/";  
     }  
 
        
@@ -260,29 +258,21 @@ public class AppController {
 
 
     @Scheduled(cron ="0 0 04 * * *") //happens every day at 04:00 (change the 0 before to change the mins)
-    public void reportCron() {
+    public void reportCron() { //send the attendance sheet for tomorrows events
         
         List<Trainee> allTrainees = trainee_service.getAllTrainees();
-
         System.out.println(allTrainees.size());
-
-
-        for(int j = 0; j<allTrainees.size(); j++){ //loops through all trainees to see if they have any events for tomorrow
-
-            
-            String currentUser = allTrainees.get(j).getUsername(); //--> loop through each trainee in dB. userRepo.getAllByDType(trainee)
-        
-            List<Event> tomorrowsEvents = event_service.getTomorrowsEvents(currentUser); //get all events the user has tomorrow
+        for(int j = 0; j<allTrainees.size(); j++){ 
+            //loops through all trainees to see if they have any events for tomorrow
+            String currentUser = allTrainees.get(j).getUsername();
+             //--> loop through each trainee in dB. userRepo.getAllByDType(trainee)
+            List<Event> tomorrowsEvents = event_service.getTomorrowsEvents(currentUser);
+             //get all events the user has tomorrow
             String userEmail = trainee_service.getUser(currentUser).getEmail(); //get the users email
-
-
-
 
             for(int i = 0; i<tomorrowsEvents.size(); i++){
                 System.out.println(i);
-
                 List<Learner> attendingUsers = learner_service.getAttendance(tomorrowsEvents.get(i).eventID());
-
                 try {
                     email_service.email(tomorrowsEvents.get(i), attendingUsers, userEmail);
                 } catch (MessagingException e) {
@@ -291,6 +281,17 @@ public class AppController {
         }
 
         }
+
+
+	}
+
+
+
+    @Scheduled(cron = "0 0 1 * * MON")//happens every monday at 1AM
+    public void purge() { //deletes redundant event data
+        LocalDate lastWeek = LocalDate.now().minusDays(7);
+
+        event_service.purgeEvents(lastWeek);
 
 
 	}

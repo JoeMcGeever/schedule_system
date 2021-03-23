@@ -27,13 +27,13 @@ public class Event {
     private String location;
 
     @Column(name="date")
-    private String date; //string??
+    private String date; 
 
     @Column(name="time")
-    private String time; //string??
+    private String time; 
 
     @Column(name="endtime")
-    private String endTime; //string??
+    private String endTime; 
 
     @Column(name="duration")
     private int duration;

@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http    
         .authorizeRequests()  
             .antMatchers( "/css/**").permitAll() // permits unauthorized access to the css directory 
-            .antMatchers( "/images/**").permitAll()
+            .antMatchers( "/images/**").permitAll() //and all images
             .anyRequest().authenticated()  
                 .and()  
             .formLogin()  

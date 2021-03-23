@@ -7,7 +7,8 @@ public class Trainee extends User {
     @Column(name="trainerbio") //case insensitive, but trainerBio does convert to trainer_bio
     private String trainerBio;
 
-    public String getBio() {
+    @Override
+    public String getDescription() {
         return trainerBio;
     }
 
